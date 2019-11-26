@@ -110,6 +110,18 @@ class SourceSchema(AttrsSchema):
         register_as_scheme = True
 
 
+@attr.s(auto_attribs=True, kw_only=True)
+class Partition:
+    partition_name: Optional[str] = None
+    create_time: Optional[str] = None
+
+
+class PartitionSchema(AttrsSchema):
+    class Meta:
+        target = Partition
+        register_as_scheme = True
+
+
 # this is a temporary hack to satisfy mypy. Once https://github.com/python/mypy/issues/6136 is resolved, use
 # `attr.converters.default_if_none(default=False)`
 def default_if_none(arg: Optional[bool]) -> bool:
@@ -128,6 +140,7 @@ class Table:
     columns: List[Column] = attr.ib()
     owners: List[User] = []
     watermarks: List[Watermark] = []
+    partitions: List[Partition] = []
     table_writer: Optional[Application] = None
     last_updated_timestamp: Optional[int] = None
     source: Optional[Source] = None

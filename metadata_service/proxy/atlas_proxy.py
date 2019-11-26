@@ -12,7 +12,7 @@ from beaker.util import parse_cache_config_options
 from random import randint
 
 from metadata_service.entity.popular_table import PopularTable
-from metadata_service.entity.table_detail import Table, User, Tag, Column, Statistics
+from metadata_service.entity.table_detail import Table, User, Tag, Column, Statistics, Partition
 from metadata_service.entity.tag_detail import TagDetail
 from metadata_service.entity.user_detail import User as UserEntity
 from metadata_service.exception import NotFoundException
@@ -322,7 +322,8 @@ class AtlasProxy(BaseProxy):
                 description=attrs.get('description') or attrs.get('comment'),
                 owners=[User(email=attrs.get('owner'))],
                 columns=columns,
-                last_updated_timestamp=table_details.get('updateTime'))
+                last_updated_timestamp=table_details.get('updateTime'),
+                partitions=[Partition(partition_name="ALPHA", create_time="12321321")])
 
             return table
         except KeyError as ex:

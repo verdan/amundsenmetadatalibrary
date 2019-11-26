@@ -44,6 +44,11 @@ watermark_fields = {
     'create_time': fields.String
 }
 
+partitions_fields = {
+    'partition_name': fields.String,
+    'create_time': fields.String
+}
+
 tag_fields = {
     'tag_type': fields.String,
     'tag_name': fields.String
@@ -76,6 +81,8 @@ table_detail_fields = {
     'columns': fields.List(fields.Nested(column_fields)),
     # Can be an empty list
     'watermarks': fields.List(fields.Nested(watermark_fields)),
+    # Can be an empty list
+    'partitions': fields.List(fields.Nested(partitions_fields)),
     'table_writer': fields.Nested(table_writer_fields),  # Optional
     'last_updated_timestamp': fields.Integer,  # Optional
     'source': fields.Nested(source_fields),  # Optional
